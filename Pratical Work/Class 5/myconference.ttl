@@ -1,0 +1,154 @@
+@prefix : <http://www.semanticweb.org/tiago/ontologies/2026/0/untitled-ontology-19/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://www.semanticweb.org/tiago/ontologies/2026/0/untitled-ontology-19/> .
+
+<http://www.semanticweb.org/tiago/ontologies/2026/0/untitled-ontology-19> rdf:type owl:Ontology .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://www.semanticweb.org/tiago/ontologies/2026/0/untitled-ontology-19/attends
+:attends rdf:type owl:ObjectProperty ;
+         rdfs:domain :Person ;
+         rdfs:range :Conference ;
+         owl:propertyDisjointWith :organizes .
+
+
+###  http://www.semanticweb.org/tiago/ontologies/2026/0/untitled-ontology-19/conference
+:conference rdf:type owl:ObjectProperty ;
+            rdfs:subPropertyOf owl:topObjectProperty ;
+            owl:inverseOf :talks .
+
+
+###  http://www.semanticweb.org/tiago/ontologies/2026/0/untitled-ontology-19/listens
+:listens rdf:type owl:ObjectProperty ;
+         rdfs:domain :Attendee ;
+         rdfs:range :Talk .
+
+
+###  http://www.semanticweb.org/tiago/ontologies/2026/0/untitled-ontology-19/organizedBy
+:organizedBy rdf:type owl:ObjectProperty ;
+             owl:inverseOf :organizes .
+
+
+###  http://www.semanticweb.org/tiago/ontologies/2026/0/untitled-ontology-19/organizes
+:organizes rdf:type owl:ObjectProperty ;
+           rdfs:domain :Organizer ;
+           rdfs:range :Conference .
+
+
+###  http://www.semanticweb.org/tiago/ontologies/2026/0/untitled-ontology-19/place
+:place rdf:type owl:ObjectProperty ,
+                owl:FunctionalProperty ;
+       rdfs:domain :Conference ;
+       rdfs:range :Place .
+
+
+###  http://www.semanticweb.org/tiago/ontologies/2026/0/untitled-ontology-19/speaks
+:speaks rdf:type owl:ObjectProperty ;
+        rdfs:domain :Speaker ;
+        rdfs:range :Talk .
+
+
+###  http://www.semanticweb.org/tiago/ontologies/2026/0/untitled-ontology-19/talks
+:talks rdf:type owl:ObjectProperty ;
+       rdfs:subPropertyOf owl:topObjectProperty ;
+       rdfs:domain :Conference ;
+       rdfs:range :Talk .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://www.semanticweb.org/tiago/ontologies/2026/0/untitled-ontology-19/Attendee
+:Attendee rdf:type owl:Class ;
+          rdfs:subClassOf :Person .
+
+
+###  http://www.semanticweb.org/tiago/ontologies/2026/0/untitled-ontology-19/Conference
+:Conference rdf:type owl:Class ;
+            owl:disjointWith :Talk .
+
+
+###  http://www.semanticweb.org/tiago/ontologies/2026/0/untitled-ontology-19/Organizer
+:Organizer rdf:type owl:Class ;
+           rdfs:subClassOf :Person .
+
+
+###  http://www.semanticweb.org/tiago/ontologies/2026/0/untitled-ontology-19/Person
+:Person rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/tiago/ontologies/2026/0/untitled-ontology-19/Place
+:Place rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/tiago/ontologies/2026/0/untitled-ontology-19/Speaker
+:Speaker rdf:type owl:Class ;
+         rdfs:subClassOf :Person .
+
+
+###  http://www.semanticweb.org/tiago/ontologies/2026/0/untitled-ontology-19/Talk
+:Talk rdf:type owl:Class .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  http://www.semanticweb.org/tiago/ontologies/2026/0/untitled-ontology-19/Kairi
+:Kairi rdf:type owl:NamedIndividual ,
+                :Attendee ;
+       :attends :Web_Semantic ;
+       :listens :Ontology .
+
+
+###  http://www.semanticweb.org/tiago/ontologies/2026/0/untitled-ontology-19/Ontology
+:Ontology rdf:type owl:NamedIndividual ,
+                   :Talk .
+
+
+###  http://www.semanticweb.org/tiago/ontologies/2026/0/untitled-ontology-19/Porto
+:Porto rdf:type owl:NamedIndividual ,
+                :Place .
+
+
+###  http://www.semanticweb.org/tiago/ontologies/2026/0/untitled-ontology-19/Rute
+:Rute rdf:type owl:NamedIndividual ,
+               :Organizer ;
+      :organizes :Web_Semantic .
+
+
+###  http://www.semanticweb.org/tiago/ontologies/2026/0/untitled-ontology-19/Tiago
+:Tiago rdf:type owl:NamedIndividual ,
+                :Speaker ;
+       :attends :Web_Semantic ;
+       :speaks :Ontology .
+
+
+###  http://www.semanticweb.org/tiago/ontologies/2026/0/untitled-ontology-19/Web_Semantic
+:Web_Semantic rdf:type owl:NamedIndividual ,
+                       :Conference ;
+              :place :Porto ;
+              :talks :Ontology .
+
+
+#################################################################
+#    General axioms
+#################################################################
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :Attendee
+                :Organizer
+                :Speaker
+              )
+] .
+
+
+###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi
