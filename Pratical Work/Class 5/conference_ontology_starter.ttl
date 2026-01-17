@@ -1,0 +1,73 @@
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix conf: <http://example.org/conference#> .
+
+conf: a owl:Ontology ;
+  rdfs:label "Conference Organization Ontology (starter)" .
+
+conf:Person a owl:Class .
+conf:Speaker a owl:Class ; rdfs:subClassOf conf:Person .
+conf:Attendee a owl:Class ; rdfs:subClassOf conf:Person .
+conf:Organizer a owl:Class ; rdfs:subClassOf conf:Person .
+
+conf:Conference a owl:Class .
+conf:Track a owl:Class .
+conf:Session a owl:Class .
+conf:Talk a owl:Class ; rdfs:subClassOf conf:Session .
+conf:Workshop a owl:Class ; rdfs:subClassOf conf:Session .
+conf:Tutorial a owl:Class ; rdfs:subClassOf conf:Session .
+
+conf:Room a owl:Class .
+conf:Building a owl:Class .
+
+[] a owl:AllDisjointClasses ; owl:members ( conf:Room conf:Building conf:Session conf:Conference conf:Person ) .
+conf:Speaker owl:disjointWith conf:Attendee .
+
+conf:hasSpeaker a owl:ObjectProperty ; rdfs:domain conf:Session ; rdfs:range conf:Speaker .
+conf:givesTalk a owl:ObjectProperty ; owl:inverseOf conf:hasSpeaker ; rdfs:domain conf:Speaker ; rdfs:range conf:Session .
+conf:hasOrganizer a owl:ObjectProperty ; rdfs:domain conf:Conference ; rdfs:range conf:Organizer .
+conf:organizes a owl:ObjectProperty ; owl:inverseOf conf:hasOrganizer ; rdfs:domain conf:Organizer ; rdfs:range conf:Conference .
+conf:takesPlaceIn a owl:ObjectProperty , owl:FunctionalProperty ; rdfs:domain conf:Session ; rdfs:range conf:Room .
+conf:locatedIn a owl:ObjectProperty ; rdfs:domain conf:Room ; rdfs:range conf:Building .
+conf:inTrack a owl:ObjectProperty ; rdfs:domain conf:Session ; rdfs:range conf:Track .
+conf:partOf a owl:ObjectProperty ; rdfs:domain conf:Session ; rdfs:range conf:Conference .
+conf:registeredFor a owl:ObjectProperty ; rdfs:domain conf:Person ; rdfs:range conf:Conference .
+
+conf:hasName a owl:DatatypeProperty ; rdfs:domain owl:Thing ; rdfs:range xsd:string .
+conf:hasStartTime a owl:DatatypeProperty ; rdfs:domain conf:Session ; rdfs:range xsd:dateTime .
+
+conf:Session rdfs:subClassOf [
+  a owl:Restriction ; owl:onProperty conf:takesPlaceIn ; owl:cardinality "1"^^xsd:nonNegativeInteger
+] , [
+  a owl:Restriction ; owl:onProperty conf:hasSpeaker ; owl:minCardinality "1"^^xsd:nonNegativeInteger
+] .
+
+conf:Conference rdfs:subClassOf [
+  a owl:Restriction ; owl:onProperty conf:hasOrganizer ; owl:minCardinality "1"^^xsd:nonNegativeInteger
+] .
+
+conf:Room rdfs:subClassOf [
+  a owl:Restriction ; owl:onProperty conf:locatedIn ; owl:cardinality "1"^^xsd:nonNegativeInteger
+] .
+
+conf:Attendee owl:equivalentClass [
+  a owl:Class ;
+  owl:intersectionOf ( conf:Person [ a owl:Restriction ; owl:onProperty conf:registeredFor ; owl:someValuesFrom conf:Conference ] )
+] .
+
+conf:BuildingA a conf:Building ; conf:hasName "Main Building A" .
+conf:Room101 a conf:Room ; conf:hasName "Room 101" ; conf:locatedIn conf:BuildingA .
+
+conf:Conf2025 a conf:Conference ; conf:hasName "Semantic Web Conf 2025" .
+
+conf:Alice_Wong a conf:Organizer , conf:Person ; conf:hasName "Alice Wong" ; conf:organizes conf:Conf2025 .
+conf:John_Smith a conf:Speaker , conf:Person ; conf:hasName "John Smith" ; conf:registeredFor conf:Conf2025 .
+conf:Maria_Garcia a conf:Person ; conf:hasName "Maria Garcia" ; conf:registeredFor conf:Conf2025 .
+
+conf:Keynote_Opening a conf:Talk , conf:Session ;
+  conf:hasName "Opening Keynote" ;
+  conf:hasSpeaker conf:John_Smith ;
+  conf:takesPlaceIn conf:Room101 ;
+  conf:partOf conf:Conf2025 .
