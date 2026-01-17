@@ -1,0 +1,503 @@
+@prefix : <http://www.semanticweb.org/lferrei1/ontologies/2025/8/zebra/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://www.semanticweb.org/lferrei1/ontologies/2025/8/zebra/> .
+
+<http://www.semanticweb.org/lferrei1/ontologies/2025/8/zebra> rdf:type owl:Ontology .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://www.semanticweb.org/lferrei1/ontologies/2025/8/zebra/drinks
+:drinks rdf:type owl:ObjectProperty ,
+                 owl:FunctionalProperty ,
+                 owl:InverseFunctionalProperty ;
+        rdfs:domain :Nationality ;
+        rdfs:range :Drink .
+
+
+###  http://www.semanticweb.org/lferrei1/ontologies/2025/8/zebra/hasColor
+:hasColor rdf:type owl:ObjectProperty ,
+                   owl:FunctionalProperty ,
+                   owl:InverseFunctionalProperty ;
+          rdfs:domain :House ;
+          rdfs:range :Wall_color .
+
+
+###  http://www.semanticweb.org/lferrei1/ontologies/2025/8/zebra/livesIn
+:livesIn rdf:type owl:ObjectProperty ,
+                  owl:FunctionalProperty ,
+                  owl:InverseFunctionalProperty ;
+         rdfs:domain :Nationality ;
+         rdfs:range :House .
+
+
+###  http://www.semanticweb.org/lferrei1/ontologies/2025/8/zebra/owns
+:owns rdf:type owl:ObjectProperty ,
+               owl:FunctionalProperty ,
+               owl:InverseFunctionalProperty ;
+      rdfs:domain :Nationality ;
+      rdfs:range :Pet .
+
+
+###  http://www.semanticweb.org/lferrei1/ontologies/2025/8/zebra/rightTo
+:rightTo rdf:type owl:ObjectProperty ,
+                  owl:FunctionalProperty ,
+                  owl:InverseFunctionalProperty ;
+         rdfs:domain :House ;
+         rdfs:range :House .
+
+
+###  http://www.semanticweb.org/lferrei1/ontologies/2025/8/zebra/smokes
+:smokes rdf:type owl:ObjectProperty ,
+                 owl:FunctionalProperty ,
+                 owl:InverseFunctionalProperty ;
+        rdfs:domain :Nationality ;
+        rdfs:range :Cigar .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://www.semanticweb.org/lferrei1/ontologies/2025/8/zebra/Cigar
+:Cigar rdf:type owl:Class ;
+       owl:equivalentClass [ rdf:type owl:Class ;
+                             owl:oneOf ( :chesterfields
+                                         :kools
+                                         :lucky_strike
+                                         :old_gold
+                                         :parliaments
+                                       )
+                           ] ;
+       rdfs:subClassOf [ rdf:type owl:Restriction ;
+                         owl:onProperty [ owl:inverseOf :smokes
+                                        ] ;
+                         owl:someValuesFrom :Nationality
+                       ] .
+
+
+###  http://www.semanticweb.org/lferrei1/ontologies/2025/8/zebra/Drink
+:Drink rdf:type owl:Class ;
+       owl:equivalentClass [ rdf:type owl:Class ;
+                             owl:oneOf ( :coffee
+                                         :milk
+                                         :oranje_juice
+                                         :tea
+                                         :water
+                                       )
+                           ] ;
+       rdfs:subClassOf [ rdf:type owl:Restriction ;
+                         owl:onProperty [ owl:inverseOf :drinks
+                                        ] ;
+                         owl:someValuesFrom :Nationality
+                       ] .
+
+
+###  http://www.semanticweb.org/lferrei1/ontologies/2025/8/zebra/House
+:House rdf:type owl:Class ;
+       owl:equivalentClass [ rdf:type owl:Class ;
+                             owl:oneOf ( :house_1
+                                         :house_2
+                                         :house_3
+                                         :house_4
+                                         :house_5
+                                       )
+                           ] ;
+       rdfs:subClassOf [ owl:intersectionOf ( [ rdf:type owl:Restriction ;
+                                                owl:onProperty :hasColor ;
+                                                owl:someValuesFrom :Wall_color
+                                              ]
+                                              [ rdf:type owl:Restriction ;
+                                                owl:onProperty [ owl:inverseOf :livesIn
+                                                               ] ;
+                                                owl:someValuesFrom :Nationality
+                                              ]
+                                            ) ;
+                         rdf:type owl:Class
+                       ] .
+
+
+###  http://www.semanticweb.org/lferrei1/ontologies/2025/8/zebra/Nationality
+:Nationality rdf:type owl:Class ;
+             owl:equivalentClass [ rdf:type owl:Class ;
+                                   owl:oneOf ( :english
+                                               :japanese
+                                               :norwegian
+                                               :spaniard
+                                               :ukrainian
+                                             )
+                                 ] ;
+             rdfs:subClassOf [ owl:intersectionOf ( [ rdf:type owl:Restriction ;
+                                                      owl:onProperty :drinks ;
+                                                      owl:someValuesFrom :Drink
+                                                    ]
+                                                    [ rdf:type owl:Restriction ;
+                                                      owl:onProperty :livesIn ;
+                                                      owl:someValuesFrom :House
+                                                    ]
+                                                    [ rdf:type owl:Restriction ;
+                                                      owl:onProperty :owns ;
+                                                      owl:someValuesFrom :Pet
+                                                    ]
+                                                    [ rdf:type owl:Restriction ;
+                                                      owl:onProperty :smokes ;
+                                                      owl:someValuesFrom :Cigar
+                                                    ]
+                                                  ) ;
+                               rdf:type owl:Class
+                             ] .
+
+
+###  http://www.semanticweb.org/lferrei1/ontologies/2025/8/zebra/Pet
+:Pet rdf:type owl:Class ;
+     owl:equivalentClass [ rdf:type owl:Class ;
+                           owl:oneOf ( :dog
+                                       :fox
+                                       :horse
+                                       :snails
+                                       :zebra
+                                     )
+                         ] ;
+     rdfs:subClassOf [ rdf:type owl:Restriction ;
+                       owl:onProperty [ owl:inverseOf :owns
+                                      ] ;
+                       owl:someValuesFrom :Nationality
+                     ] .
+
+
+###  http://www.semanticweb.org/lferrei1/ontologies/2025/8/zebra/Wall_color
+:Wall_color rdf:type owl:Class ;
+            owl:equivalentClass [ rdf:type owl:Class ;
+                                  owl:oneOf ( :blue
+                                              :green
+                                              :ivory
+                                              :red
+                                              :yellow
+                                            )
+                                ] ;
+            rdfs:subClassOf [ rdf:type owl:Restriction ;
+                              owl:onProperty [ owl:inverseOf :hasColor
+                                             ] ;
+                              owl:someValuesFrom :House
+                            ] .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  http://www.semanticweb.org/lferrei1/ontologies/2025/8/zebra/blue
+:blue rdf:type owl:NamedIndividual ,
+               owl:Thing .
+
+
+###  http://www.semanticweb.org/lferrei1/ontologies/2025/8/zebra/chesterfields
+:chesterfields rdf:type owl:NamedIndividual ,
+                        owl:Thing ,
+                        [ rdf:type owl:Restriction ;
+                          owl:onProperty [ owl:inverseOf :smokes
+                                         ] ;
+                          owl:someValuesFrom [ rdf:type owl:Restriction ;
+                                               owl:onProperty :livesIn ;
+                                               owl:someValuesFrom [ rdf:type owl:Class ;
+                                                                    owl:unionOf ( [ rdf:type owl:Restriction ;
+                                                                                    owl:onProperty :rightTo ;
+                                                                                    owl:someValuesFrom [ rdf:type owl:Restriction ;
+                                                                                                         owl:onProperty [ owl:inverseOf :livesIn
+                                                                                                                        ] ;
+                                                                                                         owl:someValuesFrom [ rdf:type owl:Restriction ;
+                                                                                                                              owl:onProperty :owns ;
+                                                                                                                              owl:hasValue :fox
+                                                                                                                            ]
+                                                                                                       ]
+                                                                                  ]
+                                                                                  [ rdf:type owl:Restriction ;
+                                                                                    owl:onProperty [ owl:inverseOf :rightTo
+                                                                                                   ] ;
+                                                                                    owl:someValuesFrom [ rdf:type owl:Restriction ;
+                                                                                                         owl:onProperty [ owl:inverseOf :livesIn
+                                                                                                                        ] ;
+                                                                                                         owl:someValuesFrom [ rdf:type owl:Restriction ;
+                                                                                                                              owl:onProperty :owns ;
+                                                                                                                              owl:hasValue :fox
+                                                                                                                            ]
+                                                                                                       ]
+                                                                                  ]
+                                                                                )
+                                                                  ]
+                                             ]
+                        ] ;
+               rdfs:comment "11.The man who smokes Chesterfields lives in the house next to the man with the fox." .
+
+
+###  http://www.semanticweb.org/lferrei1/ontologies/2025/8/zebra/coffee
+:coffee rdf:type owl:NamedIndividual ,
+                 owl:Thing ,
+                 [ rdf:type owl:Restriction ;
+                   owl:onProperty [ owl:inverseOf :drinks
+                                  ] ;
+                   owl:someValuesFrom [ rdf:type owl:Restriction ;
+                                        owl:onProperty :livesIn ;
+                                        owl:someValuesFrom [ rdf:type owl:Restriction ;
+                                                             owl:onProperty :hasColor ;
+                                                             owl:hasValue :green
+                                                           ]
+                                      ]
+                 ] ;
+        rdfs:comment "4. Coffee is drunk in the green house." .
+
+
+###  http://www.semanticweb.org/lferrei1/ontologies/2025/8/zebra/dog
+:dog rdf:type owl:NamedIndividual ,
+              owl:Thing .
+
+
+###  http://www.semanticweb.org/lferrei1/ontologies/2025/8/zebra/english
+:english rdf:type owl:NamedIndividual ,
+                  owl:Thing ,
+                  [ rdf:type owl:Restriction ;
+                    owl:onProperty :livesIn ;
+                    owl:someValuesFrom [ rdf:type owl:Restriction ;
+                                         owl:onProperty :hasColor ;
+                                         owl:hasValue :red
+                                       ]
+                  ] ;
+         rdfs:comment "2. The Englishman lives in the red house." .
+
+
+###  http://www.semanticweb.org/lferrei1/ontologies/2025/8/zebra/fox
+:fox rdf:type owl:NamedIndividual .
+
+
+###  http://www.semanticweb.org/lferrei1/ontologies/2025/8/zebra/green
+:green rdf:type owl:NamedIndividual ,
+                [ rdf:type owl:Restriction ;
+                  owl:onProperty [ owl:inverseOf :hasColor
+                                 ] ;
+                  owl:someValuesFrom [ rdf:type owl:Restriction ;
+                                       owl:onProperty :rightTo ;
+                                       owl:someValuesFrom [ rdf:type owl:Restriction ;
+                                                            owl:onProperty :hasColor ;
+                                                            owl:hasValue :ivory
+                                                          ]
+                                     ]
+                ] ;
+       rdfs:comment "6. The green house is immediately to the right of the ivory house." .
+
+
+###  http://www.semanticweb.org/lferrei1/ontologies/2025/8/zebra/horse
+:horse rdf:type owl:NamedIndividual .
+
+
+###  http://www.semanticweb.org/lferrei1/ontologies/2025/8/zebra/house_1
+:house_1 rdf:type owl:NamedIndividual ,
+                  [ rdf:type owl:Restriction ;
+                    owl:onProperty :rightTo ;
+                    owl:allValuesFrom owl:Nothing
+                  ] .
+
+
+###  http://www.semanticweb.org/lferrei1/ontologies/2025/8/zebra/house_2
+:house_2 rdf:type owl:NamedIndividual ;
+         :rightTo :house_1 .
+
+
+###  http://www.semanticweb.org/lferrei1/ontologies/2025/8/zebra/house_3
+:house_3 rdf:type owl:NamedIndividual ;
+         :rightTo :house_2 .
+
+
+###  http://www.semanticweb.org/lferrei1/ontologies/2025/8/zebra/house_4
+:house_4 rdf:type owl:NamedIndividual ;
+         :rightTo :house_3 .
+
+
+###  http://www.semanticweb.org/lferrei1/ontologies/2025/8/zebra/house_5
+:house_5 rdf:type owl:NamedIndividual ,
+                  [ rdf:type owl:Restriction ;
+                    owl:onProperty [ owl:inverseOf :rightTo
+                                   ] ;
+                    owl:allValuesFrom owl:Nothing
+                  ] ;
+         :rightTo :house_4 .
+
+
+###  http://www.semanticweb.org/lferrei1/ontologies/2025/8/zebra/ivory
+:ivory rdf:type owl:NamedIndividual .
+
+
+###  http://www.semanticweb.org/lferrei1/ontologies/2025/8/zebra/japanese
+:japanese rdf:type owl:NamedIndividual ;
+          :smokes :parliaments ;
+          rdfs:comment "14.The Japanese smokes Parliaments." .
+
+
+###  http://www.semanticweb.org/lferrei1/ontologies/2025/8/zebra/kools
+:kools rdf:type owl:NamedIndividual ,
+                owl:Thing ,
+                [ rdf:type owl:Restriction ;
+                  owl:onProperty [ owl:inverseOf :smokes
+                                 ] ;
+                  owl:someValuesFrom [ rdf:type owl:Restriction ;
+                                       owl:onProperty :livesIn ;
+                                       owl:someValuesFrom [ rdf:type owl:Class ;
+                                                            owl:unionOf ( [ rdf:type owl:Restriction ;
+                                                                            owl:onProperty :rightTo ;
+                                                                            owl:someValuesFrom [ rdf:type owl:Restriction ;
+                                                                                                 owl:onProperty [ owl:inverseOf :livesIn
+                                                                                                                ] ;
+                                                                                                 owl:someValuesFrom [ rdf:type owl:Restriction ;
+                                                                                                                      owl:onProperty :owns ;
+                                                                                                                      owl:hasValue :horse
+                                                                                                                    ]
+                                                                                               ]
+                                                                          ]
+                                                                          [ rdf:type owl:Restriction ;
+                                                                            owl:onProperty [ owl:inverseOf :rightTo
+                                                                                           ] ;
+                                                                            owl:someValuesFrom [ rdf:type owl:Restriction ;
+                                                                                                 owl:onProperty [ owl:inverseOf :livesIn
+                                                                                                                ] ;
+                                                                                                 owl:someValuesFrom [ rdf:type owl:Restriction ;
+                                                                                                                      owl:onProperty :owns ;
+                                                                                                                      owl:hasValue :horse
+                                                                                                                    ]
+                                                                                               ]
+                                                                          ]
+                                                                        )
+                                                          ]
+                                     ]
+                ] ,
+                [ rdf:type owl:Restriction ;
+                  owl:onProperty [ owl:inverseOf :smokes
+                                 ] ;
+                  owl:someValuesFrom [ rdf:type owl:Restriction ;
+                                       owl:onProperty :livesIn ;
+                                       owl:someValuesFrom [ rdf:type owl:Restriction ;
+                                                            owl:onProperty :hasColor ;
+                                                            owl:hasValue :yellow
+                                                          ]
+                                     ]
+                ] ;
+       rdfs:comment "12.Kools are smoked in a house next to the house where the horse is kept." ,
+                    "8. Kools are smoked in the yellow house." .
+
+
+###  http://www.semanticweb.org/lferrei1/ontologies/2025/8/zebra/lucky_strike
+:lucky_strike rdf:type owl:NamedIndividual ,
+                       [ rdf:type owl:Restriction ;
+                         owl:onProperty [ owl:inverseOf :smokes
+                                        ] ;
+                         owl:someValuesFrom [ rdf:type owl:Restriction ;
+                                              owl:onProperty :drinks ;
+                                              owl:hasValue :oranje_juice
+                                            ]
+                       ] ;
+              rdfs:comment "13.The Lucky Strike smoker drinks orange juice." .
+
+
+###  http://www.semanticweb.org/lferrei1/ontologies/2025/8/zebra/milk
+:milk rdf:type owl:NamedIndividual ,
+               owl:Thing ,
+               [ rdf:type owl:Restriction ;
+                 owl:onProperty [ owl:inverseOf :drinks
+                                ] ;
+                 owl:someValuesFrom [ rdf:type owl:Restriction ;
+                                      owl:onProperty :livesIn ;
+                                      owl:hasValue :house_3
+                                    ]
+               ] ;
+      rdfs:comment "9.Milk is drunk in the middle house." .
+
+
+###  http://www.semanticweb.org/lferrei1/ontologies/2025/8/zebra/norwegian
+:norwegian rdf:type owl:NamedIndividual ,
+                    [ rdf:type owl:Restriction ;
+                      owl:onProperty :livesIn ;
+                      owl:someValuesFrom [ rdf:type owl:Class ;
+                                           owl:unionOf ( [ rdf:type owl:Restriction ;
+                                                           owl:onProperty :rightTo ;
+                                                           owl:someValuesFrom [ rdf:type owl:Restriction ;
+                                                                                owl:onProperty :hasColor ;
+                                                                                owl:hasValue :blue
+                                                                              ]
+                                                         ]
+                                                         [ rdf:type owl:Restriction ;
+                                                           owl:onProperty [ owl:inverseOf :rightTo
+                                                                          ] ;
+                                                           owl:someValuesFrom [ rdf:type owl:Restriction ;
+                                                                                owl:onProperty :hasColor ;
+                                                                                owl:hasValue :blue
+                                                                              ]
+                                                         ]
+                                                       )
+                                         ]
+                    ] ;
+           :livesIn :house_1 ;
+           rdfs:comment "10.The Norwegian lives in the first house." ,
+                        "15.The Norwegian lives next to the blue house." .
+
+
+###  http://www.semanticweb.org/lferrei1/ontologies/2025/8/zebra/old_gold
+:old_gold rdf:type owl:NamedIndividual ,
+                   owl:Thing ,
+                   [ rdf:type owl:Restriction ;
+                     owl:onProperty [ owl:inverseOf :smokes
+                                    ] ;
+                     owl:someValuesFrom [ rdf:type owl:Restriction ;
+                                          owl:onProperty :owns ;
+                                          owl:hasValue :snails
+                                        ]
+                   ] ;
+          rdfs:comment "7.The Old Gold smoker owns snails" .
+
+
+###  http://www.semanticweb.org/lferrei1/ontologies/2025/8/zebra/oranje_juice
+:oranje_juice rdf:type owl:NamedIndividual .
+
+
+###  http://www.semanticweb.org/lferrei1/ontologies/2025/8/zebra/parliaments
+:parliaments rdf:type owl:NamedIndividual .
+
+
+###  http://www.semanticweb.org/lferrei1/ontologies/2025/8/zebra/red
+:red rdf:type owl:NamedIndividual .
+
+
+###  http://www.semanticweb.org/lferrei1/ontologies/2025/8/zebra/snails
+:snails rdf:type owl:NamedIndividual .
+
+
+###  http://www.semanticweb.org/lferrei1/ontologies/2025/8/zebra/spaniard
+:spaniard rdf:type owl:NamedIndividual ;
+          :owns :dog ;
+          rdfs:comment "3. The Spaniard owns the dog.(object property)" .
+
+
+###  http://www.semanticweb.org/lferrei1/ontologies/2025/8/zebra/tea
+:tea rdf:type owl:NamedIndividual .
+
+
+###  http://www.semanticweb.org/lferrei1/ontologies/2025/8/zebra/ukrainian
+:ukrainian rdf:type owl:NamedIndividual ;
+           :drinks :tea .
+
+
+###  http://www.semanticweb.org/lferrei1/ontologies/2025/8/zebra/water
+:water rdf:type owl:NamedIndividual .
+
+
+###  http://www.semanticweb.org/lferrei1/ontologies/2025/8/zebra/yellow
+:yellow rdf:type owl:NamedIndividual .
+
+
+###  http://www.semanticweb.org/lferrei1/ontologies/2025/8/zebra/zebra
+:zebra rdf:type owl:NamedIndividual .
+
+
+###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi

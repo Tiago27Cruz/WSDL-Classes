@@ -1,0 +1,531 @@
+@prefix : <http://www.semanticweb.org/tiago/ontologies/2026/0/untitled-ontology-20/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://www.semanticweb.org/tiago/ontologies/2026/0/untitled-ontology-20/> .
+
+<http://www.semanticweb.org/tiago/ontologies/2026/0/untitled-ontology-20> rdf:type owl:Ontology .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://www.semanticweb.org/tiago/ontologies/2026/0/untitled-ontology-20/color
+:color rdf:type owl:ObjectProperty ,
+                owl:FunctionalProperty ,
+                owl:InverseFunctionalProperty ;
+       rdfs:domain :House ;
+       rdfs:range :Color .
+
+
+###  http://www.semanticweb.org/tiago/ontologies/2026/0/untitled-ontology-20/drinks
+:drinks rdf:type owl:ObjectProperty ,
+                 owl:FunctionalProperty ,
+                 owl:InverseFunctionalProperty ;
+        rdfs:domain :Person ;
+        rdfs:range :Drink .
+
+
+###  http://www.semanticweb.org/tiago/ontologies/2026/0/untitled-ontology-20/lives
+:lives rdf:type owl:ObjectProperty ,
+                owl:FunctionalProperty ,
+                owl:InverseFunctionalProperty ;
+       rdfs:domain :Person ;
+       rdfs:range :House .
+
+
+###  http://www.semanticweb.org/tiago/ontologies/2026/0/untitled-ontology-20/owns
+:owns rdf:type owl:ObjectProperty ,
+               owl:FunctionalProperty ,
+               owl:InverseFunctionalProperty ;
+      rdfs:domain :Person ;
+      rdfs:range :Pet .
+
+
+###  http://www.semanticweb.org/tiago/ontologies/2026/0/untitled-ontology-20/rightTo
+:rightTo rdf:type owl:ObjectProperty ;
+         rdfs:subPropertyOf owl:topObjectProperty ;
+         rdf:type owl:FunctionalProperty ,
+                  owl:InverseFunctionalProperty ;
+         rdfs:domain :House ;
+         rdfs:range :House .
+
+
+###  http://www.semanticweb.org/tiago/ontologies/2026/0/untitled-ontology-20/smokes
+:smokes rdf:type owl:ObjectProperty ,
+                 owl:FunctionalProperty ,
+                 owl:InverseFunctionalProperty ;
+        rdfs:domain :Person ;
+        rdfs:range :Cigar .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://www.semanticweb.org/tiago/ontologies/2026/0/untitled-ontology-20/Cigar
+:Cigar rdf:type owl:Class ;
+       rdfs:subClassOf [ rdf:type owl:Restriction ;
+                         owl:onProperty [ owl:inverseOf :smokes
+                                        ] ;
+                         owl:someValuesFrom :Person
+                       ] .
+
+
+###  http://www.semanticweb.org/tiago/ontologies/2026/0/untitled-ontology-20/Color
+:Color rdf:type owl:Class ;
+       rdfs:subClassOf [ rdf:type owl:Restriction ;
+                         owl:onProperty [ owl:inverseOf :color
+                                        ] ;
+                         owl:someValuesFrom :House
+                       ] .
+
+
+###  http://www.semanticweb.org/tiago/ontologies/2026/0/untitled-ontology-20/Drink
+:Drink rdf:type owl:Class ;
+       rdfs:subClassOf [ rdf:type owl:Restriction ;
+                         owl:onProperty [ owl:inverseOf :drinks
+                                        ] ;
+                         owl:someValuesFrom :Person
+                       ] .
+
+
+###  http://www.semanticweb.org/tiago/ontologies/2026/0/untitled-ontology-20/House
+:House rdf:type owl:Class ;
+       owl:equivalentClass [ rdf:type owl:Class ;
+                             owl:oneOf ( :House1
+                                         :House2
+                                         :House3
+                                         :House4
+                                         :House5
+                                       )
+                           ] ;
+       rdfs:subClassOf [ owl:intersectionOf ( [ rdf:type owl:Restriction ;
+                                                owl:onProperty :color ;
+                                                owl:someValuesFrom :Color
+                                              ]
+                                              [ rdf:type owl:Restriction ;
+                                                owl:onProperty [ owl:inverseOf :lives
+                                                               ] ;
+                                                owl:someValuesFrom :Person
+                                              ]
+                                            ) ;
+                         rdf:type owl:Class
+                       ] .
+
+
+###  http://www.semanticweb.org/tiago/ontologies/2026/0/untitled-ontology-20/Person
+:Person rdf:type owl:Class ;
+        rdfs:subClassOf [ owl:intersectionOf ( [ rdf:type owl:Restriction ;
+                                                 owl:onProperty :drinks ;
+                                                 owl:someValuesFrom :Drink
+                                               ]
+                                               [ rdf:type owl:Restriction ;
+                                                 owl:onProperty :lives ;
+                                                 owl:someValuesFrom :House
+                                               ]
+                                               [ rdf:type owl:Restriction ;
+                                                 owl:onProperty :owns ;
+                                                 owl:someValuesFrom :Pet
+                                               ]
+                                               [ rdf:type owl:Restriction ;
+                                                 owl:onProperty :smokes ;
+                                                 owl:someValuesFrom :Cigar
+                                               ]
+                                             ) ;
+                          rdf:type owl:Class
+                        ] .
+
+
+###  http://www.semanticweb.org/tiago/ontologies/2026/0/untitled-ontology-20/Pet
+:Pet rdf:type owl:Class ;
+     rdfs:subClassOf [ rdf:type owl:Restriction ;
+                       owl:onProperty [ owl:inverseOf :owns
+                                      ] ;
+                       owl:someValuesFrom :Person
+                     ] .
+
+
+###  http://www.w3.org/2002/07/owl#Nothing
+owl:Nothing rdf:type owl:Class .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  http://www.semanticweb.org/tiago/ontologies/2026/0/untitled-ontology-20/Blue
+:Blue rdf:type owl:NamedIndividual ,
+               :Color .
+
+
+###  http://www.semanticweb.org/tiago/ontologies/2026/0/untitled-ontology-20/Chesterfields
+:Chesterfields rdf:type owl:NamedIndividual ,
+                        :Cigar ,
+                        [ rdf:type owl:Restriction ;
+                          owl:onProperty [ owl:inverseOf :smokes
+                                         ] ;
+                          owl:someValuesFrom [ rdf:type owl:Restriction ;
+                                               owl:onProperty :lives ;
+                                               owl:someValuesFrom [ rdf:type owl:Class ;
+                                                                    owl:unionOf ( [ rdf:type owl:Restriction ;
+                                                                                    owl:onProperty :rightTo ;
+                                                                                    owl:someValuesFrom [ rdf:type owl:Restriction ;
+                                                                                                         owl:onProperty [ owl:inverseOf :lives
+                                                                                                                        ] ;
+                                                                                                         owl:someValuesFrom [ rdf:type owl:Restriction ;
+                                                                                                                              owl:onProperty :owns ;
+                                                                                                                              owl:hasValue :Fox
+                                                                                                                            ]
+                                                                                                       ]
+                                                                                  ]
+                                                                                  [ rdf:type owl:Restriction ;
+                                                                                    owl:onProperty [ owl:inverseOf :rightTo
+                                                                                                   ] ;
+                                                                                    owl:someValuesFrom [ rdf:type owl:Restriction ;
+                                                                                                         owl:onProperty [ owl:inverseOf :lives
+                                                                                                                        ] ;
+                                                                                                         owl:someValuesFrom [ rdf:type owl:Restriction ;
+                                                                                                                              owl:onProperty :owns ;
+                                                                                                                              owl:hasValue :Fox
+                                                                                                                            ]
+                                                                                                       ]
+                                                                                  ]
+                                                                                )
+                                                                  ]
+                                             ]
+                        ] .
+
+
+###  http://www.semanticweb.org/tiago/ontologies/2026/0/untitled-ontology-20/Coffee
+:Coffee rdf:type owl:NamedIndividual ,
+                 :Drink ,
+                 [ rdf:type owl:Restriction ;
+                   owl:onProperty [ owl:inverseOf :drinks
+                                  ] ;
+                   owl:someValuesFrom [ rdf:type owl:Restriction ;
+                                        owl:onProperty :lives ;
+                                        owl:someValuesFrom [ rdf:type owl:Restriction ;
+                                                             owl:onProperty :color ;
+                                                             owl:hasValue :Green
+                                                           ]
+                                      ]
+                 ] .
+
+
+###  http://www.semanticweb.org/tiago/ontologies/2026/0/untitled-ontology-20/Dog
+:Dog rdf:type owl:NamedIndividual ,
+              :Pet .
+
+
+###  http://www.semanticweb.org/tiago/ontologies/2026/0/untitled-ontology-20/Englishman
+:Englishman rdf:type owl:NamedIndividual ,
+                     :Person ,
+                     [ rdf:type owl:Restriction ;
+                       owl:onProperty :lives ;
+                       owl:someValuesFrom [ rdf:type owl:Restriction ;
+                                            owl:onProperty :color ;
+                                            owl:hasValue :Red
+                                          ]
+                     ] .
+
+
+###  http://www.semanticweb.org/tiago/ontologies/2026/0/untitled-ontology-20/Fox
+:Fox rdf:type owl:NamedIndividual ,
+              :Pet .
+
+
+###  http://www.semanticweb.org/tiago/ontologies/2026/0/untitled-ontology-20/Green
+:Green rdf:type owl:NamedIndividual ,
+                :Color ,
+                [ rdf:type owl:Restriction ;
+                  owl:onProperty [ owl:inverseOf :color
+                                 ] ;
+                  owl:someValuesFrom [ rdf:type owl:Restriction ;
+                                       owl:onProperty :rightTo ;
+                                       owl:someValuesFrom [ rdf:type owl:Restriction ;
+                                                            owl:onProperty :color ;
+                                                            owl:hasValue :Ivory
+                                                          ]
+                                     ]
+                ] .
+
+
+###  http://www.semanticweb.org/tiago/ontologies/2026/0/untitled-ontology-20/Horse
+:Horse rdf:type owl:NamedIndividual ,
+                :Pet .
+
+
+###  http://www.semanticweb.org/tiago/ontologies/2026/0/untitled-ontology-20/House1
+:House1 rdf:type owl:NamedIndividual ,
+                 :House ,
+                 [ rdf:type owl:Restriction ;
+                   owl:onProperty :rightTo ;
+                   owl:allValuesFrom owl:Nothing
+                 ] .
+
+
+###  http://www.semanticweb.org/tiago/ontologies/2026/0/untitled-ontology-20/House2
+:House2 rdf:type owl:NamedIndividual ,
+                 :House ;
+        :rightTo :House1 .
+
+
+###  http://www.semanticweb.org/tiago/ontologies/2026/0/untitled-ontology-20/House3
+:House3 rdf:type owl:NamedIndividual ,
+                 :House ;
+        :rightTo :House2 .
+
+
+###  http://www.semanticweb.org/tiago/ontologies/2026/0/untitled-ontology-20/House4
+:House4 rdf:type owl:NamedIndividual ,
+                 :House ;
+        :rightTo :House3 .
+
+
+###  http://www.semanticweb.org/tiago/ontologies/2026/0/untitled-ontology-20/House5
+:House5 rdf:type owl:NamedIndividual ,
+                 :House ,
+                 [ rdf:type owl:Restriction ;
+                   owl:onProperty [ owl:inverseOf :rightTo
+                                  ] ;
+                   owl:allValuesFrom owl:Nothing
+                 ] ;
+        :rightTo :House4 .
+
+
+###  http://www.semanticweb.org/tiago/ontologies/2026/0/untitled-ontology-20/Ivory
+:Ivory rdf:type owl:NamedIndividual ,
+                :Color .
+
+
+###  http://www.semanticweb.org/tiago/ontologies/2026/0/untitled-ontology-20/Japanese
+:Japanese rdf:type owl:NamedIndividual ,
+                   :Person ;
+          :smokes :Parliaments .
+
+
+###  http://www.semanticweb.org/tiago/ontologies/2026/0/untitled-ontology-20/Kools
+:Kools rdf:type owl:NamedIndividual ,
+                :Cigar ,
+                [ rdf:type owl:Restriction ;
+                  owl:onProperty [ owl:inverseOf :smokes
+                                 ] ;
+                  owl:someValuesFrom [ rdf:type owl:Restriction ;
+                                       owl:onProperty :lives ;
+                                       owl:someValuesFrom [ rdf:type owl:Class ;
+                                                            owl:unionOf ( [ rdf:type owl:Restriction ;
+                                                                            owl:onProperty :rightTo ;
+                                                                            owl:someValuesFrom [ rdf:type owl:Restriction ;
+                                                                                                 owl:onProperty [ owl:inverseOf :lives
+                                                                                                                ] ;
+                                                                                                 owl:someValuesFrom [ rdf:type owl:Restriction ;
+                                                                                                                      owl:onProperty :owns ;
+                                                                                                                      owl:hasValue :Horse
+                                                                                                                    ]
+                                                                                               ]
+                                                                          ]
+                                                                          [ rdf:type owl:Restriction ;
+                                                                            owl:onProperty [ owl:inverseOf :rightTo
+                                                                                           ] ;
+                                                                            owl:someValuesFrom [ rdf:type owl:Restriction ;
+                                                                                                 owl:onProperty [ owl:inverseOf :lives
+                                                                                                                ] ;
+                                                                                                 owl:someValuesFrom [ rdf:type owl:Restriction ;
+                                                                                                                      owl:onProperty :owns ;
+                                                                                                                      owl:hasValue :Horse
+                                                                                                                    ]
+                                                                                               ]
+                                                                          ]
+                                                                        )
+                                                          ]
+                                     ]
+                ] ,
+                [ rdf:type owl:Restriction ;
+                  owl:onProperty [ owl:inverseOf :smokes
+                                 ] ;
+                  owl:someValuesFrom [ rdf:type owl:Restriction ;
+                                       owl:onProperty :lives ;
+                                       owl:someValuesFrom [ rdf:type owl:Restriction ;
+                                                            owl:onProperty :color ;
+                                                            owl:hasValue :Yellow
+                                                          ]
+                                     ]
+                ] .
+
+
+###  http://www.semanticweb.org/tiago/ontologies/2026/0/untitled-ontology-20/Lucky_Strike
+:Lucky_Strike rdf:type owl:NamedIndividual ,
+                       :Cigar ,
+                       [ rdf:type owl:Restriction ;
+                         owl:onProperty [ owl:inverseOf :smokes
+                                        ] ;
+                         owl:someValuesFrom [ rdf:type owl:Restriction ;
+                                              owl:onProperty :drinks ;
+                                              owl:hasValue :Orange_Juice
+                                            ]
+                       ] .
+
+
+###  http://www.semanticweb.org/tiago/ontologies/2026/0/untitled-ontology-20/Milk
+:Milk rdf:type owl:NamedIndividual ,
+               :Drink ,
+               [ rdf:type owl:Restriction ;
+                 owl:onProperty [ owl:inverseOf :drinks
+                                ] ;
+                 owl:someValuesFrom [ rdf:type owl:Restriction ;
+                                      owl:onProperty :lives ;
+                                      owl:hasValue :House3
+                                    ]
+               ] .
+
+
+###  http://www.semanticweb.org/tiago/ontologies/2026/0/untitled-ontology-20/Norwegian
+:Norwegian rdf:type owl:NamedIndividual ,
+                    :Person ,
+                    [ rdf:type owl:Restriction ;
+                      owl:onProperty :lives ;
+                      owl:someValuesFrom [ rdf:type owl:Class ;
+                                           owl:unionOf ( [ rdf:type owl:Restriction ;
+                                                           owl:onProperty :rightTo ;
+                                                           owl:someValuesFrom [ rdf:type owl:Restriction ;
+                                                                                owl:onProperty :color ;
+                                                                                owl:hasValue :Blue
+                                                                              ]
+                                                         ]
+                                                         [ rdf:type owl:Restriction ;
+                                                           owl:onProperty [ owl:inverseOf :rightTo
+                                                                          ] ;
+                                                           owl:someValuesFrom [ rdf:type owl:Restriction ;
+                                                                                owl:onProperty :color ;
+                                                                                owl:hasValue :Blue
+                                                                              ]
+                                                         ]
+                                                       )
+                                         ]
+                    ] ;
+           :lives :House1 .
+
+
+###  http://www.semanticweb.org/tiago/ontologies/2026/0/untitled-ontology-20/Old_Gold
+:Old_Gold rdf:type owl:NamedIndividual ,
+                   :Cigar ,
+                   [ rdf:type owl:Restriction ;
+                     owl:onProperty [ owl:inverseOf :smokes
+                                    ] ;
+                     owl:someValuesFrom [ rdf:type owl:Restriction ;
+                                          owl:onProperty :owns ;
+                                          owl:hasValue :Snails
+                                        ]
+                   ] .
+
+
+###  http://www.semanticweb.org/tiago/ontologies/2026/0/untitled-ontology-20/Orange_Juice
+:Orange_Juice rdf:type owl:NamedIndividual ,
+                       :Drink .
+
+
+###  http://www.semanticweb.org/tiago/ontologies/2026/0/untitled-ontology-20/Parliaments
+:Parliaments rdf:type owl:NamedIndividual ,
+                      :Cigar .
+
+
+###  http://www.semanticweb.org/tiago/ontologies/2026/0/untitled-ontology-20/Red
+:Red rdf:type owl:NamedIndividual ,
+              :Color .
+
+
+###  http://www.semanticweb.org/tiago/ontologies/2026/0/untitled-ontology-20/Snails
+:Snails rdf:type owl:NamedIndividual ,
+                 :Pet .
+
+
+###  http://www.semanticweb.org/tiago/ontologies/2026/0/untitled-ontology-20/Spaniard
+:Spaniard rdf:type owl:NamedIndividual ,
+                   :Person ;
+          :owns :Dog .
+
+
+###  http://www.semanticweb.org/tiago/ontologies/2026/0/untitled-ontology-20/Tea
+:Tea rdf:type owl:NamedIndividual ,
+              :Drink .
+
+
+###  http://www.semanticweb.org/tiago/ontologies/2026/0/untitled-ontology-20/Ukrainian
+:Ukrainian rdf:type owl:NamedIndividual ,
+                    :Person ;
+           :drinks :Tea .
+
+
+###  http://www.semanticweb.org/tiago/ontologies/2026/0/untitled-ontology-20/Water
+:Water rdf:type owl:NamedIndividual ,
+                :Drink .
+
+
+###  http://www.semanticweb.org/tiago/ontologies/2026/0/untitled-ontology-20/Yellow
+:Yellow rdf:type owl:NamedIndividual ,
+                 :Color .
+
+
+###  http://www.semanticweb.org/tiago/ontologies/2026/0/untitled-ontology-20/Zebra
+:Zebra rdf:type owl:NamedIndividual ,
+                :Pet .
+
+
+#################################################################
+#    General axioms
+#################################################################
+
+[ rdf:type owl:AllDifferent ;
+  owl:distinctMembers ( :Blue
+                        :Green
+                        :Ivory
+                        :Red
+                        :Yellow
+                      )
+] .
+
+
+[ rdf:type owl:AllDifferent ;
+  owl:distinctMembers ( :Chesterfields
+                        :Kools
+                        :Lucky_Strike
+                        :Old_Gold
+                        :Parliaments
+                      )
+] .
+
+
+[ rdf:type owl:AllDifferent ;
+  owl:distinctMembers ( :Coffee
+                        :Milk
+                        :Orange_Juice
+                        :Tea
+                        :Water
+                      )
+] .
+
+
+[ rdf:type owl:AllDifferent ;
+  owl:distinctMembers ( :Dog
+                        :Fox
+                        :Horse
+                        :Snails
+                        :Zebra
+                      )
+] .
+
+
+[ rdf:type owl:AllDifferent ;
+  owl:distinctMembers ( :Englishman
+                        :Japanese
+                        :Norwegian
+                        :Spaniard
+                        :Ukrainian
+                      )
+] .
+
+
+###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi
