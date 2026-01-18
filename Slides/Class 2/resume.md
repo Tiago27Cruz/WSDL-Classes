@@ -1,12 +1,12 @@
-# Class 2 - Introduction pt.II + Real-World Application
+Class 2 - Introduction pt.II + Real-World Application
 
-## Key Concepts
+# Key Concepts
 
 **Web Semantics:** Turning the web into a database through structured, meaningful data. Phrases like "Rute is beautiful" does't give a computer much meaning. On the other hand, in triple format (Rute, is, Beautiful), using the appropriate terms, the computer is able to fully understand.
 
 **Linked Data:** Connecting data across different domains for more meaningful, interoperable use. Let's say I have "Rute is beautiful", the computer does't know who Rute is. If it's linked to other DBs such as WikiData, then the computer knows which Rute is considered beautiful.
 
-## Web Semantic
+# Web Semantic
 
 Gives meaning to data (metadata).
 
@@ -15,7 +15,7 @@ Key Technologies:
 - OWL (Web Ontology Language)
 - SPARQL
 
-## Linked Data
+# Linked Data
 
 Follows Tim Berners-Lee's 4 Principles:
 
@@ -24,7 +24,7 @@ Follows Tim Berners-Lee's 4 Principles:
 3. Provide useful information in standard formats (RDF).
 4. Include links to other URIs to connect data.
 
-## Real-World Applications
+# Real-World Applications
 
 1. **Wikidata:** linking diverse knowledge, open, heavily used in downstream AIs, tools.
 2. **Schema.org:** used in search engines for structured data; markup on the Web

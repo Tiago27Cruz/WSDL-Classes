@@ -1,6 +1,6 @@
-# Class 1 - Semantic Web and Linked Data Introduction
+Class 1 - Semantic Web and Linked Data Introduction
 
-## Data, Information, Knowledge
+# Data, Information, Knowledge
 
 ![](figures/pyramid.png)
 
