@@ -1,4 +1,4 @@
-# Class 1 - Semantic Web and Linked Data
+# Class 1 - Semantic Web and Linked Data Introduction
 
 ## Data, Information, Knowledge
 
