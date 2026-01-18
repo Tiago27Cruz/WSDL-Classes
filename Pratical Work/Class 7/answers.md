@@ -123,10 +123,12 @@ Example: Every Machine has at least one Component
 
 **(a) List all components of your main machine.**
 
+```
 SELECT ?component
 WHERE {
     :MainMachine :hasComponent ?component .
 }
+```
 
 Lists all components of the machine MainMachine. It will show the URI.
 
